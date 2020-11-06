@@ -1,7 +1,8 @@
-include '../../src/linalg_mod.f90'    
-program test_linalg
-use linalg_mod
+include '../../src/resize_array_mod.f90'    
+program test_resize_array
+use resize_array_mod
 implicit none
+
     logical             :: test_failed = .false.
     
     if (test_failed) then
