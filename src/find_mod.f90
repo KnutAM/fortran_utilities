@@ -41,7 +41,7 @@ end function find_int_2d
 
 function find_dbl_1d_tol(array, val_to_find, tol) result(ind)
 implicit none
-    double precision, intent(in)    :: array(:,:)
+    double precision, intent(in)    :: array(:)
     double precision, intent(in)    :: val_to_find
     double precision, intent(in)    :: tol
     integer                         :: ind, tmp_ind(1)
