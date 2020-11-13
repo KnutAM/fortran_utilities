@@ -65,10 +65,10 @@ implicit none
     integer, allocatable            ::  array(:,:)      ! Array to be expanded
     integer                         ::  expand_amount(2)! Amount to expand array with
     integer, allocatable            ::  tmp(:,:)        ! Temporary storage while expanding array
-    integer                         ::  s(2)            ! size(array)
+    integer                         ::  s(2)            ! [size(array,1),size(array,2)]
     integer                         ::  ns(2)           ! New size (s+expand_amount)
     
-    s = size(array)
+    s = [size(array,1), size(array,2)]
     ns = s + expand_amount
     allocate(tmp, source=array)
     deallocate(array)
@@ -83,10 +83,10 @@ implicit none
     double precision, allocatable   ::  array(:,:)      ! Array to be expanded
     integer                         ::  expand_amount(2)! Amount to expand array with
     double precision, allocatable   ::  tmp(:,:)        ! Temporary storage while expanding array
-    integer                         ::  s(2)            ! size(array)
+    integer                         ::  s(2)            ! [size(array,1),size(array,2)]
     integer                         ::  ns(2)           ! New size (s+expand_amount)
     
-    s = size(array)
+    s = [size(array,1), size(array,2)]
     ns = s + expand_amount
     allocate(tmp, source=array)
     deallocate(array)
