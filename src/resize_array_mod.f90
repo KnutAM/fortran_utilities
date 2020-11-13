@@ -69,6 +69,7 @@ implicit none
     integer                         ::  ns(2)           ! New size (s+expand_amount)
     
     s = size(array)
+    ns = s + expand_amount
     allocate(tmp, source=array)
     deallocate(array)
     allocate(array(ns(1), ns(2)))
@@ -86,6 +87,7 @@ implicit none
     integer                         ::  ns(2)           ! New size (s+expand_amount)
     
     s = size(array)
+    ns = s + expand_amount
     allocate(tmp, source=array)
     deallocate(array)
     allocate(array(ns(1), ns(2)))
