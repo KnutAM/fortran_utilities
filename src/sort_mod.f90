@@ -130,14 +130,14 @@ end subroutine
 ! Get unique values in array
 subroutine unique_dbl(full_vector, unique_vector, tolerance)
 implicit none
-    ! Note: full_vector will be sorted.
     ! Elements that are determined to be unique have maximum difference tolerance
     ! Default tolerance is 1.e-14*sum(abs(full_vector))/size(full_vector)
-    double precision, intent(inout)             :: full_vector(:)
+    double precision, intent(in)                :: full_vector(:)
     double precision, allocatable, intent(out)  :: unique_vector(:)
     double precision, intent(in), optional      :: tolerance
     
     double precision, allocatable               :: unique_vec_tmp(:)
+    double precision, allocatable               :: full_vector_sort(:)
     double precision    :: tol  ! Internal variable for tolerance
     integer             :: kf   ! Iterator for full vector
     integer             :: kf0  ! Value of iterator for current unique set of values
@@ -150,19 +150,20 @@ implicit none
     endif
     
     allocate(unique_vec_tmp(size(full_vector)))
+    allocate(full_vector_sort, source=full_vector)
     
-    call sort(full_vector)
+    call sort(full_vector_sort)
     
     kf0 = 1
     ku = 1
-    do kf=2,size(full_vector)
-        if (full_vector(kf) > (full_vector(kf0) + tol)) then
-            unique_vec_tmp(ku) = sum(full_vector(kf0:(kf-1)))/(kf-kf0)
+    do kf=2,size(full_vector_sort)
+        if (full_vector_sort(kf) > (full_vector_sort(kf0) + tol)) then
+            unique_vec_tmp(ku) = sum(full_vector_sort(kf0:(kf-1)))/(kf-kf0)
             kf0 = kf
             ku = ku + 1
         endif
     enddo
-    unique_vec_tmp(ku) = sum(full_vector(kf0:size(full_vector)))/(size(full_vector)-kf0 + 1)
+    unique_vec_tmp(ku) = sum(full_vector_sort(kf0:size(full_vector_sort)))/(size(full_vector_sort)-kf0 + 1)
     
     allocate(unique_vector(ku))
     unique_vector = unique_vec_tmp(1:ku)
