@@ -4,7 +4,7 @@ program test_sort
 use sort_mod
 implicit none
     integer                 :: k1                   ! iterator
-    double precision        :: tda1(10), tda2(10)   ! double arrays
+    double precision        :: tda1(10), tda2(10), tda3(10)   ! double arrays
     integer                 :: tia1(8), tia2(8)     ! integer arrays
     integer, allocatable    :: sid(:), sii(:)       ! sort_inds
     
@@ -62,6 +62,7 @@ implicit none
     endif
     
     ! Test unique
+    tda3=tda2
     call unique(tda2, unique_arr, unique_tol)
     do k1=2,size(unique_arr)
         if (unique_arr(k1)<=unique_arr(k1-1)) then
@@ -69,6 +70,10 @@ implicit none
             test_failed = .true.
         endif
     enddo
+    if (any(tda2/=tda3)) then
+        write(*,*) 'unique modified the passed in array'
+        test_failed = .true.
+    endif
     
     if (test_failed) then
         error stop 1
